@@ -11,6 +11,18 @@ export const Sidebar = styled.div<ISidebar>`
     }
     return '210px'
   }};
+
+  @media screen and (max-width: 768px) {
+    position: fixed;
+    left: 0;
+    width: ${({ collapsed }) => {
+      if (collapsed) {
+        return '56px'
+      }
+      return '100%'
+    }};
+  }
+
   height: calc(100vh - 65px); // Screen size - Navbar size
   background-color: ${({ theme }) => theme.colors.white};
 

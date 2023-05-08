@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useRouter } from 'next/router'
 import * as S from './styles'
+import { useState } from 'react'
 import {
   FaBars,
   FaBuffer,
@@ -11,52 +12,58 @@ import {
 } from 'react-icons/fa'
 import { Text } from '~/components/atoms'
 
+const sidebarItems = [
+  {
+    icon: FaBuffer,
+    label: 'Dashboard',
+    path: '',
+  },
+  {
+    icon: FaShoppingCart,
+    label: 'Minhas vendas',
+    hasChevron: true,
+    path: '/my-sales',
+  },
+  {
+    icon: FaShoppingBag,
+    label: 'Meus Produtos',
+    hasChevron: true,
+    path: '/my-products',
+  },
+  {
+    icon: FaPen,
+    label: 'Assinaturas',
+    path: 'subscriptions',
+  },
+  {
+    icon: FaCashRegister,
+    label: 'Cobrança',
+    path: 'billing',
+  },
+]
+
 export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
-
+  const { asPath } = useRouter()
   return (
     <S.Sidebar collapsed={collapsed}>
       <S.SidebarItems>
         <S.CollapseIcon onClick={() => setCollapsed(!collapsed)}>
           <FaBars size={18} />
         </S.CollapseIcon>
-        {/* Dashboard */}
-        <S.SidebarItem>
-          <FaBuffer size={18} />
-          <Text as="span" size="sm" color="gray_600" weight="bold">
-            Dashboard
-          </Text>
-        </S.SidebarItem>
-        {/* Minhas vendas */}
-        <S.SidebarItem>
-          <FaShoppingCart size={18} />
-          <Text as="span" size="sm" color="gray_600" weight="bold">
-            Minhas vendas
-            <FaChevronRight size={12} />
-          </Text>
-        </S.SidebarItem>
-        {/* Meus Produtos */}
-        <S.SidebarItem>
-          <FaShoppingBag size={18} />
-          <Text as="span" size="sm" color="gray_600" weight="bold">
-            Meus Produtos
-            <FaChevronRight size={12} />
-          </Text>
-        </S.SidebarItem>
-        {/* Assinaturas */}
-        <S.SidebarItem>
-          <FaPen size={18} />
-          <Text as="span" size="sm" color="gray_600" weight="bold">
-            Assinaturas
-          </Text>
-        </S.SidebarItem>
-        {/* Cobrança */}
-        <S.SidebarItem active collapsed={collapsed}>
-          <FaCashRegister size={18} />
-          <Text as="span" size="sm" color="gray_600" weight="bold">
-            Cobrança
-          </Text>
-        </S.SidebarItem>
+        {sidebarItems.map((item, index) => {
+          const active = item.path === asPath.substring(1)
+
+          return (
+            <S.SidebarItem key={index} active={active} collapsed={collapsed}>
+              <item.icon size={18} />
+              <Text as="span" size="sm" color="gray_600" weight="bold">
+                {item.label}
+                {item.hasChevron && <FaChevronRight size={12} />}
+              </Text>
+            </S.SidebarItem>
+          )
+        })}
       </S.SidebarItems>
     </S.Sidebar>
   )
