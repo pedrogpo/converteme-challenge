@@ -1,15 +1,18 @@
-import { Content, Navbar, Sidebar } from '~/components/organisms'
+import { Container, Content, Navbar, Sidebar } from '~/components/organisms'
+import HomeContent from './content'
 
 export default function HomeScreen() {
   return (
-    <main>
+    <>
       <Navbar />
       <Content>
         <Sidebar />
-        <div>
-          <h1></h1>
-        </div>
+        <main>
+          <Container>
+            <HomeContent />
+          </Container>
+        </main>
       </Content>
-    </main>
+    </>
   )
 }
