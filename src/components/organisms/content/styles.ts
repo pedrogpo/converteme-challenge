@@ -7,5 +7,14 @@ export const Content = styled.div`
 
   & > *:nth-child(2) {
     flex: 1;
+    max-height: calc(100vh - 65px); // Screen size - Navbar size
+    padding: 0 1rem;
+    overflow-y: auto;
+  }
+
+  @media screen and (max-width: 768px) {
+    position: relative;
+    left: 56px;
+    width: calc(100vw - 56px); // Screen size - Sidebar size
   }
 `
