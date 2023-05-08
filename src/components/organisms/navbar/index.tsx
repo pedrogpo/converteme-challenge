@@ -7,8 +7,8 @@ export default function Navbar() {
     <S.Navbar>
       <Logo size="md" />
       <S.NavbarItems>
-        <FaBell size={24} />
-        <FaQuestionCircle size={24} />
+        <FaBell color="white" size={24} />
+        <FaQuestionCircle color="white" size={24} />
         <Avatar url="/avatars/1.jpeg" username="Person 1" rounded={true} size="md" />
       </S.NavbarItems>
     </S.Navbar>

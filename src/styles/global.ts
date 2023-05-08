@@ -3,9 +3,9 @@ import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
   body{
-    background-color: white;
+    background-color: ${({ theme }) => theme.colors.gray_100};
 
-    color: white;
+    color: black;
 
     scroll-behavior: smooth;
   }
