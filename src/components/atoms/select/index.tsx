@@ -14,15 +14,7 @@ type SelectAppProps = SelectHTMLAttributes<HTMLSelectElement> & {
 // eslint-disable-next-line react/display-name
 const Select = forwardRef<HTMLSelectElement, SelectAppProps>(
   (
-    {
-      sizeOf = 'm',
-      icon,
-      iconSize,
-      className,
-      background = 'background_700',
-      error,
-      ...props
-    },
+    { sizeOf = 'm', icon, iconSize, className, background = 'gray_100', error, ...props },
     ref
   ) => {
     return (
