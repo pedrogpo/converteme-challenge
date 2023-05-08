@@ -1,5 +1,16 @@
 import * as S from './styles'
+import { Avatar, Logo } from '~/components/atoms'
+import { FaBell, FaQuestionCircle } from 'react-icons/fa'
 
 export default function Navbar() {
-  return <h1>Navbar</h1>
+  return (
+    <S.Navbar>
+      <Logo size="md" />
+      <S.NavbarItems>
+        <FaBell size={24} />
+        <FaQuestionCircle size={24} />
+        <Avatar url="/avatars/1.jpeg" username="Person 1" rounded={true} size="md" />
+      </S.NavbarItems>
+    </S.Navbar>
+  )
 }
