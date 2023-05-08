@@ -5,6 +5,7 @@ interface ILogo {
 }
 
 export const Logo = styled.div<ILogo>`
+  height: 100%;
   & > img {
     width: 100%;
     height: ${({ size }) => {
