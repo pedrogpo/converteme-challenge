@@ -1,8 +1,10 @@
 export const defaultTheme = {
   colors: {
     primary_500: 'rgba(0, 75, 255, 1)',
+    secondary_500: 'rgba(255, 93, 0, 1)',
     danger_500: 'rgba(234, 84, 98, 1)',
     white: 'rgba(255, 255, 255, 255)',
+    black: 'rgba(0, 0, 0, 1)',
     gray_100: 'rgba(237, 237, 237, 1)',
     gray_200: 'rgba(204, 204, 204, 1)',
     gray_300: 'rgba(179, 179, 179, 1)',
