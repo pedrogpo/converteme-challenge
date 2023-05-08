@@ -8,6 +8,12 @@ export const Navbar = styled.header`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+
+  @media screen and (max-width: 396px) {
+    flex-direction: column;
+    gap: 1rem;
+    height: auto;
+  }
 `
 
 export const NavbarItems = styled.div`
