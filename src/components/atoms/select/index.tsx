@@ -1,41 +1,38 @@
-import { forwardRef, SelectHTMLAttributes } from 'react'
+import { forwardRef, ReactNode, SelectHTMLAttributes } from 'react'
 import { ColorThemeType } from '~/core/constants/theme'
 import * as S from './styles'
+import { Text } from '../text'
+import { FormGroup } from '../form-group'
 
 type SelectAppProps = SelectHTMLAttributes<HTMLSelectElement> & {
   sizeOf?: 'm' | 'l'
-  icon?: JSX.Element
-  iconSize?: number
   className?: string
   background?: ColorThemeType
   error?: string
+  label?: ReactNode | string
 }
 
 // eslint-disable-next-line react/display-name
 const Select = forwardRef<HTMLSelectElement, SelectAppProps>(
-  (
-    { sizeOf = 'm', icon, iconSize, className, background = 'gray_100', error, ...props },
-    ref
-  ) => {
+  ({ sizeOf = 'm', className, background = 'white', error, label, ...props }, ref) => {
     return (
-      <S.SelectBox hasError={!!error} className={className}>
-        {icon && (
-          <S.SelectIcon sizeOf={sizeOf} iconSize={iconSize}>
-            {icon}
-          </S.SelectIcon>
-        )}
-        <S.Select
-          background={background}
-          iconSize={iconSize}
-          sizeOf={sizeOf}
-          autoComplete="none"
-          {...props}
-          ref={ref}
-        >
-          {props.children}
-        </S.Select>
-        {error && <S.SelectError>{error}</S.SelectError>}
-      </S.SelectBox>
+      <FormGroup>
+        <Text size="xs" color="gray_600" weight="semibold">
+          {label}
+        </Text>
+        <S.SelectBox hasError={!!error} className={className}>
+          <S.Select
+            background={background}
+            sizeOf={sizeOf}
+            autoComplete="none"
+            {...props}
+            ref={ref}
+          >
+            {props.children}
+          </S.Select>
+          {error && <S.SelectError>{error}</S.SelectError>}
+        </S.SelectBox>
+      </FormGroup>
     )
   }
 )

@@ -5,10 +5,10 @@ export const StepsContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between; /* Adiciona espaçamento entre os Steps */
-
-  @media screen and (max-width: 768px) {
+  margin-bottom: 1.15rem;
+  /* @media screen and (max-width: 768px) {
     justify-content: center;
-  }
+  } */
 `
 
 interface IStep {
@@ -72,11 +72,15 @@ export const Step = styled.div<IStep>`
           color: ${({ theme }) => theme.colors.gray_600};
         }
       }
-
-      @media screen and (max-width: 768px) {
-        display: none;
-      }
     `}
+
+  @media screen and (max-width: 768px) {
+    transform: scale(0.75);
+
+    ${StepProgressCount} {
+      top: -0.25rem;
+    }
+  }
 `
 
 export const StepLine = styled.div`

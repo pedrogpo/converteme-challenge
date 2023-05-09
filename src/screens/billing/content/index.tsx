@@ -1,9 +1,25 @@
-import { Steps } from '~/components/molecules'
 import * as S from './styles'
+import { Steps } from '~/components/molecules'
 import { BackArrow, Card, Text } from '~/components/atoms'
 import { billingSteps } from '~/store/billing/steps'
+import BillingData from './steps/billing-data'
+import { FormProvider, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { observer } from 'mobx-react'
+import { BillingFormTypeInput, billingFormSchema } from '~/core/schemas/billingForm'
 
-export default function BillingContent() {
+function BillingContent() {
+  const methods = useForm<BillingFormTypeInput>({
+    resolver: zodResolver(billingFormSchema),
+    mode: 'onChange',
+  })
+
+  const onSubmit = (data: BillingFormTypeInput) => {
+    console.log(data)
+  }
+
+  const steps = [<BillingData />, <div>2</div>, <div>3</div>]
+
   return (
     <S.BillingContent>
       <BackArrow />
@@ -13,9 +29,7 @@ export default function BillingContent() {
       <Card>
         <Steps
           currentStep={billingSteps.getCurrentStep()}
-          action={(index) => {
-            console.log(index)
-          }}
+          action={(index) => {}}
           steps={[
             { label: 'Dados da cobrança' },
             { label: 'Juros e multa' },
@@ -23,7 +37,17 @@ export default function BillingContent() {
             { label: 'Resumo' },
           ]}
         />
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)}>
+            {steps.map(
+              (step, index) =>
+                billingSteps.getCurrentStep() === index && <div key={index}>{step}</div>
+            )}
+          </form>
+        </FormProvider>
       </Card>
     </S.BillingContent>
   )
 }
+
+export default observer(BillingContent)

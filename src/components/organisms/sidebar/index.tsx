@@ -12,6 +12,7 @@ import {
 } from 'react-icons/fa'
 import { Text } from '~/components/atoms'
 import Link from 'next/link'
+import { useIsMobile } from '~/hooks/useIsMobile'
 
 const sidebarItems = [
   {
@@ -44,8 +45,10 @@ const sidebarItems = [
 ]
 
 export default function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(true)
+
   const { asPath } = useRouter()
+
   return (
     <S.Sidebar collapsed={collapsed}>
       <S.SidebarItems>

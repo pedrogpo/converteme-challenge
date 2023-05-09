@@ -1,18 +1,23 @@
 import * as S from './styles'
-import { FiAlertCircle } from 'react-icons/fi'
 import { Text } from '~/components/atoms'
 import { FaChevronDown } from 'react-icons/fa'
 import { useEffect, useRef, useState } from 'react'
 
-export interface IAlertDropdown {
+export interface IPaymentDropdown {
   label: string
+  afterLabel: string
   content: string
 }
 
-export default function AlertDropdown({ label, content }: IAlertDropdown) {
+export default function PaymentDropdown({
+  label,
+  afterLabel,
+  content,
+}: IPaymentDropdown) {
   const [collapsed, setCollapsed] = useState(false)
   const contentRef = useRef<HTMLDivElement>(null)
 
+  // here's a workarround
   useEffect(() => {
     if (contentRef.current) {
       const firstElementChildHeight = (
@@ -38,21 +43,26 @@ export default function AlertDropdown({ label, content }: IAlertDropdown) {
   }, [])
 
   return (
-    <S.AlertDropdown collapsed={collapsed}>
-      <S.AlertHead onClick={() => setCollapsed(!collapsed)}>
-        <S.AlertLabel>
-          <FiAlertCircle size={20} />
+    <S.PaymentDropdown collapsed={collapsed}>
+      <S.PaymentHead onClick={() => setCollapsed(!collapsed)}>
+        <S.PaymentLabel>
+          <S.PaymentCircle />
           <Text size="xs" weight="bold" color="black">
             {label}
           </Text>
-        </S.AlertLabel>
-        <FaChevronDown size={12} color="black" />
-      </S.AlertHead>
-      <S.AlertContent ref={contentRef}>
-        <Text size="xs" weight="regular" color="gray_900">
+        </S.PaymentLabel>
+        <S.PaymentLabel>
+          <Text size="xs" weight="regular" color="gray_600">
+            {afterLabel}
+          </Text>
+          <FaChevronDown size={12} color="black" />
+        </S.PaymentLabel>
+      </S.PaymentHead>
+      <S.PaymentContent ref={contentRef}>
+        <Text size="xs" weight="regular" color="gray_700">
           {content}
         </Text>
-      </S.AlertContent>
-    </S.AlertDropdown>
+      </S.PaymentContent>
+    </S.PaymentDropdown>
   )
 }

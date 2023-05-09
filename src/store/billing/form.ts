@@ -6,8 +6,8 @@ import { enableStaticRendering } from 'mobx-react'
 const isServer = typeof window === 'undefined'
 enableStaticRendering(isServer)
 
-export class BillingSteps {
-  currentStep: number = 0
+export class BillingForm {
+  currentStep: number = 1
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true })
@@ -34,4 +34,4 @@ export class BillingSteps {
   }
 }
 
-export const billingSteps = new BillingSteps()
+export const billingForm = new BillingForm()

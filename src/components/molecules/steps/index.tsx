@@ -17,21 +17,21 @@ export default function Steps({ steps, action, currentStep }: ISteps) {
     <S.StepsContainer>
       {steps.map((step, index) => (
         <S.Step
-          active={index + 1 === currentStep}
+          active={index === currentStep}
           key={index}
           onClick={() => {
-            action(index + 1)
+            action(index)
           }}
         >
           <S.StepProgress>
             <S.StepProgressCount>
-              <Text size="xl" color="gray_900" weight="bold">
+              <Text size="md" color="gray_900" weight="bold">
                 {index + 1}
               </Text>
             </S.StepProgressCount>
           </S.StepProgress>
           <S.StepLabel>
-            <Text size="sm" color="gray_700" weight="regular">
+            <Text size="xs" color="gray_700" weight="regular">
               {step.label}
             </Text>
           </S.StepLabel>

@@ -1,40 +1,43 @@
-import { forwardRef, InputHTMLAttributes } from 'react'
+import { ForwardedRef, forwardRef, InputHTMLAttributes, ReactNode, Ref } from 'react'
 import { ColorThemeType } from '~/core/constants/theme'
 import * as S from './styles'
+import { Text } from '../text'
+import { FormGroup } from '../form-group'
+import ReactInputMask from 'react-input-mask'
 
-type InputAppProps = InputHTMLAttributes<HTMLInputElement> & {
-  sizeOf?: 'm' | 'l'
-  icon?: JSX.Element
-  iconSize?: number
+type InputRef = Ref<ReactInputMask>
+
+interface Props extends InputHTMLAttributes<HTMLInputElement> {}
+
+type InputAppProps = Props & {
   className?: string
   background?: ColorThemeType
   error?: string
+  mask?: string
+  label?: ReactNode | string
+  crossOrigin?: 'anonymous' | 'use-credentials' | '' | undefined // reactmask is using crossOrigin prop and typescript is not recognizing it
 }
 
 // eslint-disable-next-line react/display-name
-const Input = forwardRef<HTMLInputElement, InputAppProps>(
-  (
-    { sizeOf = 'm', icon, iconSize, className, background = 'gray_100', error, ...props },
-    ref
-  ) => {
+const Input = forwardRef<ReactInputMask, InputAppProps>(
+  ({ className, background = 'white', error, label, mask = '', ...rest }, ref) => {
     return (
-      <S.InputBox hasError={!!error} className={className}>
-        {icon && (
-          <S.InputIcon sizeOf={sizeOf} iconSize={iconSize}>
-            {icon}
-          </S.InputIcon>
-        )}
-        <S.Input
-          background={background}
-          iconSize={iconSize}
-          sizeOf={sizeOf}
-          type="text"
-          autoComplete="none"
-          {...props}
-          ref={ref}
-        />
-        {error && <S.InputError>{error}</S.InputError>}
-      </S.InputBox>
+      <FormGroup>
+        <Text size="xs" color="gray_600" weight="semibold">
+          {label}
+        </Text>
+        <S.InputBox hasError={!!error} className={className}>
+          <S.Input
+            background={background}
+            type="text"
+            autoComplete="none"
+            mask={mask}
+            {...rest}
+            ref={ref}
+          />
+          {error && <S.InputError>{error}</S.InputError>}
+        </S.InputBox>
+      </FormGroup>
     )
   }
 )
