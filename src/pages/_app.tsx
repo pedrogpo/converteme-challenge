@@ -7,6 +7,8 @@ import { defaultTheme } from '../core/constants/theme'
 import GlobalStyle from '~/styles/global'
 import { Inter } from 'next/font/google'
 import { ToastContainer } from 'react-toastify'
+import { NextPage } from 'next'
+import { ReactElement, ReactNode } from 'react'
 
 const interFont = Inter({
   subsets: ['latin-ext'],
@@ -14,7 +16,17 @@ const interFont = Inter({
   style: 'normal',
 })
 
-function ConecteMe({ Component, pageProps }: AppProps) {
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+function ConecteMe({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page)
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <style jsx global>{`
@@ -23,7 +35,7 @@ function ConecteMe({ Component, pageProps }: AppProps) {
         }
       `}</style>
       <GlobalStyle />
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
       <ToastContainer />
     </ThemeProvider>
   )

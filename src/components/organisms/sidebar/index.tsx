@@ -11,12 +11,13 @@ import {
   FaShoppingCart,
 } from 'react-icons/fa'
 import { Text } from '~/components/atoms'
+import Link from 'next/link'
 
 const sidebarItems = [
   {
     icon: FaBuffer,
     label: 'Dashboard',
-    path: '',
+    path: '/',
   },
   {
     icon: FaShoppingCart,
@@ -33,12 +34,12 @@ const sidebarItems = [
   {
     icon: FaPen,
     label: 'Assinaturas',
-    path: 'subscriptions',
+    path: '/subscriptions',
   },
   {
     icon: FaCashRegister,
     label: 'Cobrança',
-    path: 'billing',
+    path: '/billing',
   },
 ]
 
@@ -52,16 +53,18 @@ export default function Sidebar() {
           <FaBars size={18} />
         </S.CollapseIcon>
         {sidebarItems.map((item, index) => {
-          const active = item.path === asPath.substring(1)
+          const active = item.path === asPath
 
           return (
-            <S.SidebarItem key={index} active={active} collapsed={collapsed}>
-              <item.icon size={18} />
-              <Text as="span" size="sm" color="gray_600" weight="bold">
-                {item.label}
-                {item.hasChevron && <FaChevronRight size={12} />}
-              </Text>
-            </S.SidebarItem>
+            <Link href={item.path}>
+              <S.SidebarItem key={index} active={active} collapsed={collapsed}>
+                <item.icon size={18} />
+                <Text as="span" size="sm" color="gray_600" weight="bold">
+                  {item.label}
+                  {item.hasChevron && <FaChevronRight size={12} />}
+                </Text>
+              </S.SidebarItem>
+            </Link>
           )
         })}
       </S.SidebarItems>

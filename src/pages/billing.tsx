@@ -1,3 +1,3 @@
-import HomeScreen from '~/screens/home'
+import BillingScreen from '~/screens/billing'
 
-export default HomeScreen
+export default BillingScreen

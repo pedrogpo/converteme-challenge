@@ -21,6 +21,7 @@ export const Sidebar = styled.div<ISidebar>`
       }
       return '100%'
     }};
+    z-index: 9999;
   }
 
   height: calc(100vh - 65px); // Screen size - Navbar size

@@ -1,14 +1,14 @@
 import DefaultLayout from '~/components/templates/default'
-import HomeContent from './content'
 import { NextPageWithLayout } from '~/pages/_app'
 import { ReactElement } from 'react'
+import BillingContent from './content'
 
-const HomeScreen: NextPageWithLayout = () => {
-  return <HomeContent />
+const BillingScreen: NextPageWithLayout = () => {
+  return <BillingContent />
 }
 
-HomeScreen.getLayout = (page: ReactElement) => {
+BillingScreen.getLayout = (page: ReactElement) => {
   return <DefaultLayout>{page}</DefaultLayout>
 }
 
-export default HomeScreen
+export default BillingScreen
