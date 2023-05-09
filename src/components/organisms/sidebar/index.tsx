@@ -56,8 +56,8 @@ export default function Sidebar() {
           const active = item.path === asPath
 
           return (
-            <Link href={item.path}>
-              <S.SidebarItem key={index} active={active} collapsed={collapsed}>
+            <Link href={item.path} key={index}>
+              <S.SidebarItem active={active} collapsed={collapsed}>
                 <item.icon size={18} />
                 <Text as="span" size="sm" color="gray_600" weight="bold">
                   {item.label}
