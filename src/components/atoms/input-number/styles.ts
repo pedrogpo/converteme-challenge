@@ -21,9 +21,14 @@ export const InputContainer = styled.div<InputContainerInterface>`
     `}
 `
 
-export const InputPlaceholderBox = styled.div`
+interface IPlaceholderBox {
+  optional: boolean
+}
+
+export const InputPlaceholderBox = styled.div<IPlaceholderBox>`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.primary_500};
+  background-color: ${({ theme, optional }) =>
+    !optional ? theme.colors.primary_500 : theme.colors.gray_600};
 
   display: flex;
   align-items: center;
@@ -36,7 +41,7 @@ export const InputPlaceholderBox = styled.div`
   border-radius: 0.5rem 0 0 0.5rem;
 `
 
-export const Input = styled.input`
+export const Input = styled.input<IPlaceholderBox>`
   width: 100%;
   height: 100%;
 
@@ -45,6 +50,11 @@ export const Input = styled.input`
   height: 2.25rem;
 
   border: 1px solid ${({ theme }) => theme.colors.primary_500};
+
+  border: ${({ theme, optional }) =>
+    !optional
+      ? `1px solid ${theme.colors.primary_500};`
+      : `1px solid ${theme.colors.gray_600};`};
   border-radius: 0 0.5rem 0.5rem 0;
 
   padding-left: 0.5rem;

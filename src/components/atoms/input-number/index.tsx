@@ -17,15 +17,28 @@ const schema = z.object({
 })
 
 type InputNumberAppProps = InputHTMLAttributes<HTMLInputElement> & {
+  placeholderTextBox?: string
   className?: string
   background?: ColorThemeType
   error?: string
   label?: ReactNode | string
+  optional?: boolean
 }
 
 // eslint-disable-next-line react/display-name
 const InputNumber = forwardRef<HTMLInputElement, InputNumberAppProps>(
-  ({ className, background = 'gray_100', error, label, ...props }, ref) => {
+  (
+    {
+      className,
+      background = 'gray_100',
+      error,
+      label,
+      placeholderTextBox = 'R$',
+      optional = false,
+      ...props
+    },
+    ref
+  ) => {
     // const { control } = useFormContext()
 
     // const amountController = useController({
@@ -44,12 +57,13 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberAppProps>(
         </Text>
         <S.InputContainer hasError={!!error}>
           <S.InputBox className={className}>
-            <S.InputPlaceholderBox>
+            <S.InputPlaceholderBox optional={optional}>
               <Text size="sm" weight="bold" color="white">
-                R$
+                {placeholderTextBox}
               </Text>
             </S.InputPlaceholderBox>
             <S.Input
+              optional={optional}
               placeholder="0,00"
               type="number"
               step="0.01"

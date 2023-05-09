@@ -2,6 +2,9 @@ import styled, { css } from 'styled-components'
 
 export const BillingData = styled.div`
   margin-top: 3rem;
+`
+
+export const BillingRow = styled.div`
   display: flex;
 
   @media (max-width: 992px) {
@@ -11,7 +14,7 @@ export const BillingData = styled.div`
 
 export const BillingLeftCol = styled.div`
   @media (min-width: 992px) {
-    width: 66.6666666667%; // col-8
+    width: 58.3333333333%; // col-7
     flex: 0 0 auto;
     padding-right: 0.75rem;
   }
@@ -19,7 +22,7 @@ export const BillingLeftCol = styled.div`
 
 export const BillingRightCol = styled.div`
   @media (min-width: 992px) {
-    width: 33.3333333333%; // col-4
+    width: 41.6666666667%; // col-5
     flex: 0 0 auto;
     padding-left: 0.75rem;
   }
@@ -31,4 +34,13 @@ export const FormData = styled.div`
   gap: 1.25rem;
 
   max-width: 380px;
+`
+
+////...
+
+export const AdditionalOptionsCard = styled.div`
+  background: ${({ theme }) => theme.colors.white};
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
 `

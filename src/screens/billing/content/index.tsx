@@ -7,6 +7,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { observer } from 'mobx-react'
 import { BillingFormTypeInput, billingFormSchema } from '~/core/schemas/billingForm'
+import RateAndPenalty from './steps/rate-and-penalty'
 
 function BillingContent() {
   const methods = useForm<BillingFormTypeInput>({
@@ -18,7 +19,7 @@ function BillingContent() {
     console.log(data)
   }
 
-  const steps = [<BillingData />, <div>2</div>, <div>3</div>]
+  const steps = [<BillingData />, <RateAndPenalty />, <div>3</div>]
 
   return (
     <S.BillingContent>
@@ -29,7 +30,9 @@ function BillingContent() {
       <Card>
         <Steps
           currentStep={billingSteps.getCurrentStep()}
-          action={(index) => {}}
+          action={(index) => {
+            billingSteps.setCurrentStep(index)
+          }}
           steps={[
             { label: 'Dados da cobrança' },
             { label: 'Juros e multa' },

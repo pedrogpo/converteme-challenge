@@ -53,6 +53,7 @@ interface SelectBoxInterface {
 export const SelectBox = styled.div<SelectBoxInterface>`
   position: relative;
   width: 100%;
+  max-width: 380px;
 
   ${({ hasError }) =>
     hasError &&

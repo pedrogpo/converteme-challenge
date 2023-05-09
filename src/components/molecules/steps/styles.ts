@@ -46,6 +46,7 @@ export const StepLabel = styled.div`
 `
 
 export const Step = styled.div<IStep>`
+  cursor: pointer;
   flex-basis: auto; /* Define a largura base do Step com base no conteúdo */
   flex-grow: 0; /* Impede que o Step cresça além do seu tamanho */
   text-align: center;

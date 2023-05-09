@@ -71,7 +71,7 @@ export const ButtonContainer = styled.button<ButtonProps>`
       box-shadow: 0px 0px 30px rgba(130, 87, 229, 0.2);
     `}
 
-  border-radius: 7px;
+  border-radius: 1.5rem;
 
   display: inline-flex;
   align-items: center;

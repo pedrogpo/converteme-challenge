@@ -17,8 +17,7 @@ export function PaymentWayChoose() {
   const ways = ['À vista ou parcelado', 'Assinatura']
 
   useEffect(() => {
-    setValue('billing_payment_way', ways[0])
-    setValue('billing_frequency_charge', 'monthly') // we need to do this because the select is not loaded yet
+    setValue('steps.billingData.billing_payment_way', ways[0])
   }, [])
 
   return (
@@ -35,7 +34,7 @@ export function PaymentWayChoose() {
             active={selected === index}
             onClick={() => {
               setSelected(index)
-              setValue('billing_payment_way', way)
+              setValue('steps.billingData.billing_payment_way', way)
             }}
           >
             {way}
@@ -56,8 +55,8 @@ export function PaymentWayChoose() {
               placeholder="Status"
               sizeOf="m"
               defaultValue="0"
-              error={errors.billing_installments?.message}
-              {...register('billing_installments')}
+              error={errors.steps?.billingData?.billing_installments?.message}
+              {...register('steps.billingData.billing_installments')}
             >
               <option value="0" disabled>
                 À vista
@@ -70,8 +69,8 @@ export function PaymentWayChoose() {
             </Select>
 
             <Input
-              {...register('billing_due_date')}
-              error={errors.billing_due_date?.message}
+              {...register('steps.billingData.billing_due_date')}
+              error={errors.steps?.billingData?.billing_due_date?.message}
               label="Vencimento da cobrança"
               placeholder="__/__/____"
               mask="99/99/9999"
@@ -85,8 +84,8 @@ export function PaymentWayChoose() {
               color="black"
               placeholder="Status"
               sizeOf="m"
-              error={errors.billing_frequency_charge?.message}
-              {...register('billing_frequency_charge')}
+              error={errors.steps?.billingData?.billing_frequency_charge?.message}
+              {...register('steps.billingData.billing_frequency_charge')}
               defaultValue="monthly"
             >
               <option value="monthly">Mensal</option>
@@ -98,8 +97,8 @@ export function PaymentWayChoose() {
               label="Vencimento da 1° cobrança"
               placeholder="__/__/____"
               mask="99/99/9999"
-              {...register('billing_due_date')}
-              error={errors.billing_due_date?.message}
+              {...register('steps.billingData.billing_due_date')}
+              error={errors.steps?.billingData?.billing_due_date?.message}
             />
 
             <Select
