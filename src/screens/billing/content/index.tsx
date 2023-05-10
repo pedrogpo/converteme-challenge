@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { observer } from 'mobx-react'
 import { BillingFormTypeInput, billingFormSchema } from '~/core/schemas/billingForm'
 import RateAndPenalty from './steps/rate-and-penalty'
+import { billingForm } from '~/store/billing/form'
 
 function BillingContent() {
   const methods = useForm<BillingFormTypeInput>({
@@ -19,7 +20,33 @@ function BillingContent() {
     console.log(data)
   }
 
-  const steps = [<BillingData />, <RateAndPenalty />, <div>3</div>]
+  const steps = [
+    {
+      component: <BillingData />,
+      label: 'Dados da cobrança',
+      enabled: true,
+    },
+    {
+      component: <RateAndPenalty />,
+      label: 'Juros e multa',
+      enabled: true,
+    },
+    {
+      component: <div>Documentos</div>,
+      label: 'Documentos',
+      enabled: billingForm.sendDocuments,
+    },
+    {
+      component: <div>Dados do cliente</div>,
+      label: 'Dados do cliente',
+      enabled: true,
+    },
+    {
+      component: <div>Resumo</div>,
+      label: 'Resumo',
+      enabled: true,
+    },
+  ]
 
   return (
     <S.BillingContent>
@@ -33,18 +60,14 @@ function BillingContent() {
           action={(index) => {
             billingSteps.setCurrentStep(index)
           }}
-          steps={[
-            { label: 'Dados da cobrança' },
-            { label: 'Juros e multa' },
-            { label: 'Dados do cliente' },
-            { label: 'Resumo' },
-          ]}
+          steps={steps}
         />
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
             {steps.map(
               (step, index) =>
-                billingSteps.getCurrentStep() === index && <div key={index}>{step}</div>
+                billingSteps.getCurrentStep() === index &&
+                step.enabled && <div key={index}>{step.component}</div>
             )}
           </form>
         </FormProvider>

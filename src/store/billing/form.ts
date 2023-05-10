@@ -7,30 +7,26 @@ const isServer = typeof window === 'undefined'
 enableStaticRendering(isServer)
 
 export class BillingForm {
-  currentStep: number = 1
+  sendDocuments: boolean = false
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true })
   }
 
-  setCurrentStep = (step: number) => {
-    this.currentStep = step
+  toggleSendDocuments() {
+    this.sendDocuments = !this.sendDocuments
   }
 
-  getCurrentStep = () => {
-    return this.currentStep
+  enableSendDocuments() {
+    this.sendDocuments = true
   }
 
-  nextStep = () => {
-    this.currentStep++
+  disableSendDocuments() {
+    this.sendDocuments = false
   }
 
-  previousStep = () => {
-    this.currentStep--
-  }
-
-  resetStep = () => {
-    this.currentStep = 1
+  setSendDocuments(state: boolean) {
+    this.sendDocuments = state
   }
 }
 

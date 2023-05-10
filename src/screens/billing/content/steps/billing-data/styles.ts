@@ -43,4 +43,7 @@ export const AdditionalOptionsCard = styled.div`
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 `

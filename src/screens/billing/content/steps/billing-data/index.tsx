@@ -1,11 +1,12 @@
 import * as S from './styles'
 import { PaymentWayChoose } from './components/payment-way-choose'
-import { Button, InputNumber, Text, TextArea } from '~/components/atoms'
+import { Button, InputNumber, Text, TextArea, ToggleButton } from '~/components/atoms'
 import PaymentMethodChoose from './components/payment-method-choose'
 import { billingSteps } from '~/store/billing/steps'
 import { useFormContext } from 'react-hook-form'
 import { BillingFormTypeInput } from '~/core/schemas/billingForm'
 import { NextButtonContainer } from '../../styles'
+import { billingForm } from '~/store/billing/form'
 
 export default function BillingData() {
   const {
@@ -44,7 +45,6 @@ export default function BillingData() {
             />
 
             <PaymentWayChoose />
-
             <PaymentMethodChoose />
           </S.FormData>
         </S.BillingLeftCol>
@@ -53,6 +53,13 @@ export default function BillingData() {
             <Text size="sm" color="gray_600" weight="semibold">
               Opções adicionais
             </Text>
+            <ToggleButton
+              onCheckedChange={(state) => {
+                billingForm.setSendDocuments(state)
+              }}
+              label="Inserir documentos e arquivos"
+            />
+            <ToggleButton label="Emitir nota fiscal de serviço" />
           </S.AdditionalOptionsCard>
         </S.BillingRightCol>
       </S.BillingRow>
