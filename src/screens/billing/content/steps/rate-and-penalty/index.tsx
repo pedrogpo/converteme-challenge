@@ -1,86 +1,15 @@
 import * as S from './styles'
 import { useFormContext } from 'react-hook-form'
 import { BillingFormTypeInput } from '~/core/schemas/billingForm'
-import { Button, InputNumber, Select, Text } from '~/components/atoms'
-import { ChooseButton, ChooseContainer, NextButtonContainer } from '../../styles'
+import { Button } from '~/components/atoms'
 import { billingSteps } from '~/store/billing/steps'
 import Penalty from './penalty'
-import { useState } from 'react'
-
-function Rate() {
-  return (
-    <S.GroupBox>
-      <Text size="sm" color="black" weight="bold" uppercase>
-        Juros
-      </Text>
-      <Text size="xs" color="gray_600" weight="regular">
-        Aplique juros para quando o pagamento não ocorrer até a data de vencimento. Os
-        juros acumulativos serão somados diariamente ao valor da parcela até o pagamento.
-      </Text>
-      <S.GroupMultiBox>
-        <InputNumber placeholderTextBox="%" label="Juros ao mês" />
-        <InputNumber optional placeholderTextBox="R$" label="Valor de juros ao mês" />
-      </S.GroupMultiBox>
-    </S.GroupBox>
-  )
-}
-
-function Discount() {
-  const [selected, setSelected] = useState(0)
-
-  const discountMode = ['Percentual', 'Valor fixo']
-
-  return (
-    <S.GroupBox>
-      <Text size="sm" color="black" weight="bold" uppercase>
-        Desconto
-      </Text>
-      <Text size="xs" color="gray_600" weight="regular">
-        Conceda desconto para incentivar seu cliente a realizar o pagamento antes do
-        vencimento. Você configurou o vencimento da cobrança para 30/04/2023
-      </Text>
-
-      <ChooseContainer>
-        {discountMode.map((mode, index) => (
-          <ChooseButton
-            type="button"
-            key={index}
-            active={selected === index}
-            onClick={() => {
-              setSelected(index)
-            }}
-          >
-            {mode}
-          </ChooseButton>
-        ))}
-      </ChooseContainer>
-
-      <S.GroupMultiBox>
-        {selected == 0 && (
-          <InputNumber placeholderTextBox="%" label="Percentual de desconto" />
-        )}
-        {selected == 1 && (
-          <InputNumber placeholderTextBox="R$" label="Valor do desconto" />
-        )}
-      </S.GroupMultiBox>
-
-      <Select
-        label="Prazo máximo do desconto"
-        placeholder="Status"
-        sizeOf="l"
-        defaultValue="none"
-      >
-        <option value="none">Até o dia do vencimento</option>
-      </Select>
-    </S.GroupBox>
-  )
-}
+import Discount from './discount'
+import Rate from './rate'
+import { NextButtonContainer } from '../../styles'
 
 export default function RateAndPenalty() {
-  const {
-    trigger,
-    formState: { errors, isValid },
-  } = useFormContext<BillingFormTypeInput>()
+  const { trigger } = useFormContext<BillingFormTypeInput>()
 
   return (
     <S.RateAndPenalty>
@@ -101,7 +30,7 @@ export default function RateAndPenalty() {
           hug={false}
           type="button"
           onClick={() => {
-            trigger('steps.billingData').then((isValid) => {
+            trigger('steps.rateAndPenalty').then((isValid) => {
               if (isValid) {
                 billingSteps.nextStep()
               }

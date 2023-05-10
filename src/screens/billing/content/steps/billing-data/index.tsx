@@ -11,7 +11,7 @@ export default function BillingData() {
   const {
     register,
     trigger,
-    handleSubmit,
+    getValues,
     setValue,
     formState: { errors, isValid },
   } = useFormContext<BillingFormTypeInput>()
@@ -59,6 +59,7 @@ export default function BillingData() {
                 onCheckedChange={(state) => {
                   setValue('steps.billingData.send_documents', state)
                 }}
+                checked={getValues('steps.billingData.send_documents')!}
                 label="Inserir documentos e arquivos"
               />
               <Text size="xs" color="gray_600" weight="regular">
@@ -67,7 +68,14 @@ export default function BillingData() {
               </Text>
             </S.AdditionalOptionsButtonsBox>
             <S.AdditionalOptionsButtonsBox>
-              <ToggleButton size="sm" label="Emitir nota fiscal de serviço" />
+              <ToggleButton
+                onCheckedChange={(state) => {
+                  setValue('steps.billingData.issue_invoice', state)
+                }}
+                checked={getValues('steps.billingData.issue_invoice')!}
+                size="sm"
+                label="Emitir nota fiscal de serviço"
+              />
               <Text size="xs" color="gray_600" weight="regular">
                 Você deseja emitir uma nota fiscal de serviço vinculado a esta cobrança?
               </Text>

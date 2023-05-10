@@ -57,6 +57,35 @@ export const billingFormSchema = z.object({
       billing_installments: z.string().transform((val) => Number(val)),
       billing_frequency_charge: z.string().default('monthly'),
       send_documents: z.boolean().default(false),
+      issue_invoice: z.boolean().default(false),
+    }),
+    rateAndPenalty: z.object({
+      interestPerMonth: z
+        .string()
+        .transform((val) => Number(val.replaceAll(',', '.')))
+        .default('0'),
+      interestValue: z
+        .string()
+        .transform((val) => Number(val.replaceAll(',', '.')))
+        .default('0'),
+      penaltyPercentage: z
+        .string()
+        .transform((val) => Number(val.replaceAll(',', '.')))
+        .default('0'),
+      penaltyValue: z
+        .string()
+        .transform((val) => Number(val.replaceAll(',', '.')))
+        .default('0'),
+      discountPercentage: z
+        .string()
+        .transform((val) => Number(val.replaceAll(',', '.')))
+        .default('0'),
+      discountValue: z
+        .string()
+        .transform((val) => Number(val.replaceAll(',', '.')))
+        .default('0'),
+    }),
+    documents: z.object({
       uploaded_files: z
         .array(z.custom<File>())
         .refine(
@@ -71,7 +100,6 @@ export const billingFormSchema = z.object({
         )
         .default([]),
     }),
-    rateAndPenalty: z.object({}),
   }),
 })
 

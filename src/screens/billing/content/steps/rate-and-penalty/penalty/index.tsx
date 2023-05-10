@@ -1,11 +1,14 @@
-import * as S from './styles'
 import { useState } from 'react'
 import { InputNumber, Text } from '~/components/atoms'
 import { GroupBox } from '../styles'
 import { GroupMultiBox } from '../styles'
 import { ChooseButton, ChooseContainer } from '../../../styles'
+import { useFormContext } from 'react-hook-form'
+import { BillingFormTypeInput } from '~/core/schemas/billingForm'
 
 export default function Penalty() {
+  const { register } = useFormContext<BillingFormTypeInput>()
+
   const [selected, setSelected] = useState(0)
 
   const penaltiesMode = ['Percentual', 'Valor fixo']
@@ -37,9 +40,19 @@ export default function Penalty() {
 
       <GroupMultiBox>
         {selected == 0 && (
-          <InputNumber placeholderTextBox="%" label="Valor percentual da multa" />
+          <InputNumber
+            {...register('steps.rateAndPenalty.penaltyPercentage')}
+            placeholderTextBox="%"
+            label="Valor percentual da multa"
+          />
         )}
-        {selected == 1 && <InputNumber placeholderTextBox="R$" label="Valor da multa" />}
+        {selected == 1 && (
+          <InputNumber
+            {...register('steps.rateAndPenalty.penaltyValue')}
+            placeholderTextBox="R$"
+            label="Valor da multa"
+          />
+        )}
       </GroupMultiBox>
     </GroupBox>
   )

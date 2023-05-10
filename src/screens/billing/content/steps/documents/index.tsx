@@ -80,7 +80,7 @@ function Documents() {
   } = useFormContext<BillingFormTypeInput>()
 
   const uploadedFiles: File[] = useWatch({
-    name: 'steps.billingData.uploaded_files',
+    name: 'steps.documents.uploaded_files',
   })
 
   const handleChange = (files: FileList) => {
@@ -92,7 +92,7 @@ function Documents() {
           (currentFile) => currentFile.name === file.name || currentFile.size == file.size
         )
     )
-    setValue('steps.billingData.uploaded_files', [...currentFiles, ...filteredFiles])
+    setValue('steps.documents.uploaded_files', [...currentFiles, ...filteredFiles])
   }
 
   console.log()
@@ -132,10 +132,10 @@ function Documents() {
         <FileList
           uploadedFiles={uploadedFiles}
           onRemove={(index) => {
-            const newFiles = getValues('steps.billingData.uploaded_files')?.filter(
+            const newFiles = getValues('steps.documents.uploaded_files')?.filter(
               (file, i) => i !== index
             )
-            setValue('steps.billingData.uploaded_files', newFiles)
+            setValue('steps.documents.uploaded_files', newFiles)
           }}
         />
       </S.DocumentHead>
