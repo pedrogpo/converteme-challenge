@@ -10,6 +10,8 @@ export const BillingRow = styled.div`
   @media (max-width: 992px) {
     flex-direction: column;
   }
+
+  gap: 1rem;
 `
 
 export const BillingLeftCol = styled.div`

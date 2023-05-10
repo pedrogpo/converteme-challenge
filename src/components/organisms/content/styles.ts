@@ -4,10 +4,10 @@ export const Content = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  max-height: calc(100vh - 65px); // Screen size - Navbar size
 
   & > *:nth-child(2) {
     flex: 1;
-    max-height: calc(100vh - 65px); // Screen size - Navbar size
     padding: 0 1rem;
     overflow-y: auto;
   }
