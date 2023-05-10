@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
     color: black;
 
     scroll-behavior: smooth;
+    overflow: hidden;
   }
 
   *{
