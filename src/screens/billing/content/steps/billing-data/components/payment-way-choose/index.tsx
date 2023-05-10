@@ -53,7 +53,7 @@ export function PaymentWayChoose() {
               label="Parcelamento"
               color="black"
               placeholder="Status"
-              sizeOf="m"
+              sizeOf="l"
               defaultValue="0"
               error={errors.steps?.billingData?.billing_installments?.message}
               {...register('steps.billingData.billing_installments')}
@@ -83,7 +83,7 @@ export function PaymentWayChoose() {
               label="Frequência da cobrança"
               color="black"
               placeholder="Status"
-              sizeOf="m"
+              sizeOf="l"
               error={errors.steps?.billingData?.billing_frequency_charge?.message}
               {...register('steps.billingData.billing_frequency_charge')}
               defaultValue="monthly"
@@ -112,7 +112,7 @@ export function PaymentWayChoose() {
               }
               color="black"
               placeholder="Status"
-              sizeOf="m"
+              sizeOf="l"
               // error={errors.status?.message}
               defaultValue="none"
             >

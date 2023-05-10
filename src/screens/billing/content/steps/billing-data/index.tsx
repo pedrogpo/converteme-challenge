@@ -54,6 +54,7 @@ export default function BillingData() {
               Opções adicionais
             </Text>
             <ToggleButton
+              checked={billingForm.sendDocuments}
               onCheckedChange={(state) => {
                 billingForm.setSendDocuments(state)
               }}

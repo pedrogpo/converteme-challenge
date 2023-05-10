@@ -9,6 +9,7 @@ import { observer } from 'mobx-react'
 import { BillingFormTypeInput, billingFormSchema } from '~/core/schemas/billingForm'
 import RateAndPenalty from './steps/rate-and-penalty'
 import { billingForm } from '~/store/billing/form'
+import Documents from './steps/documents'
 
 function BillingContent() {
   const methods = useForm<BillingFormTypeInput>({
@@ -32,7 +33,7 @@ function BillingContent() {
       enabled: true,
     },
     {
-      component: <div>Documentos</div>,
+      component: <Documents />,
       label: 'Documentos',
       enabled: billingForm.sendDocuments,
     },

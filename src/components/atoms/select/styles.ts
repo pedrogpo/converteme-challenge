@@ -11,14 +11,28 @@ interface SelectIconProps {
 }
 
 export const Select = styled.select<SelectProps>`
-  border-radius: 7px;
   width: 100%;
   outline: none;
   border: 1px solid transparent;
 
-  padding: 0 0.75rem;
   font-size: ${({ theme }) => theme.typography.text.xs};
   font-weight: ${({ theme }) => theme.typography.weight.regular};
+
+  ${({ sizeOf }) =>
+    sizeOf == 'l' &&
+    css`
+      padding: 0 0.75rem;
+      height: 2.25rem;
+      border-radius: 7px;
+    `}
+
+  ${({ sizeOf }) =>
+    sizeOf == 'm' &&
+    css`
+      padding: 0 0.35rem;
+      height: 1.35rem;
+      border-radius: 4px;
+    `}
 
   ${({ theme, background }) => css`
     background: url('/icons/arrow-down.png') no-repeat right ${theme.colors[background]};
@@ -30,8 +44,6 @@ export const Select = styled.select<SelectProps>`
 
   border: 1px solid ${({ theme }) => theme.colors.gray_400};
   background-size: 8px;
-
-  height: 2.25rem;
 
   appearance: none;
 

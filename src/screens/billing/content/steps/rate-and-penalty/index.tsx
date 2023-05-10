@@ -67,7 +67,7 @@ function Discount() {
       <Select
         label="Prazo máximo do desconto"
         placeholder="Status"
-        sizeOf="m"
+        sizeOf="l"
         defaultValue="none"
       >
         <option value="none">Até o dia do vencimento</option>

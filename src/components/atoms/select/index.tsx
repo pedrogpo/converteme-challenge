@@ -14,12 +14,14 @@ type SelectAppProps = SelectHTMLAttributes<HTMLSelectElement> & {
 
 // eslint-disable-next-line react/display-name
 const Select = forwardRef<HTMLSelectElement, SelectAppProps>(
-  ({ sizeOf = 'm', className, background = 'white', error, label, ...props }, ref) => {
+  ({ sizeOf = 'l', className, background = 'white', error, label, ...props }, ref) => {
     return (
       <FormGroup>
-        <Text size="xs" color="gray_600" weight="semibold">
-          {label}
-        </Text>
+        {label && (
+          <Text size="xs" color="gray_600" weight="semibold">
+            {label}
+          </Text>
+        )}
         <S.SelectBox hasError={!!error} className={className}>
           <S.Select
             background={background}
