@@ -1,20 +1,8 @@
 import * as S from './styles'
-import { forwardRef, InputHTMLAttributes, ReactNode } from 'react'
+import { forwardRef, InputHTMLAttributes, ReactNode, useMemo } from 'react'
 import { ColorThemeType } from '~/core/constants/theme'
-import InputMask from 'react-input-mask'
-import { useForm, useController, useFormContext } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-
-import { z } from 'zod'
 import { Text } from '../text'
 import { FormGroup } from '../form-group'
-
-const schema = z.object({
-  amount: z
-    .number()
-    .min(0.01, 'Must be at least 0.01')
-    .max(999999.99, 'Must be at most 999999.99'),
-})
 
 type InputNumberAppProps = InputHTMLAttributes<HTMLInputElement> & {
   placeholderTextBox?: string
@@ -39,17 +27,6 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberAppProps>(
     },
     ref
   ) => {
-    // const { control } = useFormContext()
-
-    // const amountController = useController({
-    //   name: 'amount',
-    //   control,
-    //   defaultValue: 0,
-    //   rules: {
-    //     required: { value: true, message: 'Amount is required' },
-    //   },
-    // })
-
     return (
       <FormGroup>
         <Text size="xs" color="gray_600" weight="semibold">
@@ -65,8 +42,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberAppProps>(
             <S.Input
               optional={optional}
               placeholder="0,00"
-              type="number"
-              step="0.01"
+              type="text"
               {...props}
               autoComplete="none"
               ref={ref}

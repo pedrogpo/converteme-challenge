@@ -59,7 +59,7 @@ function BillingContent() {
         <Steps
           currentStep={billingSteps.getCurrentStep()}
           action={(index) => {
-            billingSteps.setCurrentStep(index)
+            // billingSteps.setCurrentStep(index)
           }}
           steps={steps}
         />

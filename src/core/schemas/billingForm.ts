@@ -8,6 +8,9 @@ export const billingFormSchema = z.object({
         .transform((val) => Number(val.replaceAll(',', '.')))
         .refine((val) => val >= 0.01, {
           message: 'O valor precisa ser no min. 0.01',
+        })
+        .refine((val) => val <= 999999, {
+          message: 'O valor precisa ser no max. 999999.0',
         }),
       billing_description: z.string(),
       billing_due_date: z
