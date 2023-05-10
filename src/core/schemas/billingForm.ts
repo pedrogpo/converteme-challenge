@@ -56,6 +56,20 @@ export const billingFormSchema = z.object({
       billing_payment_way: z.string(),
       billing_installments: z.string().transform((val) => Number(val)),
       billing_frequency_charge: z.string().default('monthly'),
+      send_documents: z.boolean().default(false),
+      uploaded_files: z
+        .array(z.custom<File>())
+        .refine(
+          (files) => {
+            // Check if all items in the array are instances of the File object
+            return files.every((file) => file instanceof File)
+          },
+          {
+            // If the refinement fails, throw an error with this message
+            message: 'Expected a file',
+          }
+        )
+        .default([]),
     }),
     rateAndPenalty: z.object({}),
   }),

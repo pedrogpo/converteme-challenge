@@ -6,13 +6,13 @@ import { billingSteps } from '~/store/billing/steps'
 import { useFormContext } from 'react-hook-form'
 import { BillingFormTypeInput } from '~/core/schemas/billingForm'
 import { NextButtonContainer } from '../../styles'
-import { billingForm } from '~/store/billing/form'
 
 export default function BillingData() {
   const {
     register,
     trigger,
     handleSubmit,
+    setValue,
     formState: { errors, isValid },
   } = useFormContext<BillingFormTypeInput>()
 
@@ -53,14 +53,25 @@ export default function BillingData() {
             <Text size="sm" color="gray_600" weight="semibold">
               Opções adicionais
             </Text>
-            <ToggleButton
-              checked={billingForm.sendDocuments}
-              onCheckedChange={(state) => {
-                billingForm.setSendDocuments(state)
-              }}
-              label="Inserir documentos e arquivos"
-            />
-            <ToggleButton label="Emitir nota fiscal de serviço" />
+            <S.AdditionalOptionsButtonsBox>
+              <ToggleButton
+                size="sm"
+                onCheckedChange={(state) => {
+                  setValue('steps.billingData.send_documents', state)
+                }}
+                label="Inserir documentos e arquivos"
+              />
+              <Text size="xs" color="gray_600" weight="regular">
+                Deseja adicionar documentos para o seu cliente visualizar e baixar quando
+                receber esta cobrança
+              </Text>
+            </S.AdditionalOptionsButtonsBox>
+            <S.AdditionalOptionsButtonsBox>
+              <ToggleButton size="sm" label="Emitir nota fiscal de serviço" />
+              <Text size="xs" color="gray_600" weight="regular">
+                Você deseja emitir uma nota fiscal de serviço vinculado a esta cobrança?
+              </Text>
+            </S.AdditionalOptionsButtonsBox>
           </S.AdditionalOptionsCard>
         </S.BillingRightCol>
       </S.BillingRow>

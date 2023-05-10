@@ -8,7 +8,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { observer } from 'mobx-react'
 import { BillingFormTypeInput, billingFormSchema } from '~/core/schemas/billingForm'
 import RateAndPenalty from './steps/rate-and-penalty'
-import { billingForm } from '~/store/billing/form'
 import Documents from './steps/documents'
 
 function BillingContent() {
@@ -20,6 +19,8 @@ function BillingContent() {
   const onSubmit = (data: BillingFormTypeInput) => {
     console.log({ data })
   }
+
+  const sendDocuments = methods.watch('steps.billingData.send_documents')
 
   const steps = [
     {
@@ -35,7 +36,7 @@ function BillingContent() {
     {
       component: <Documents />,
       label: 'Documentos',
-      enabled: billingForm.sendDocuments,
+      enabled: sendDocuments!,
     },
     {
       component: <div>Dados do cliente</div>,

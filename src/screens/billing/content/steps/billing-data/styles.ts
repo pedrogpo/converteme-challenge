@@ -49,3 +49,10 @@ export const AdditionalOptionsCard = styled.div`
   flex-direction: column;
   gap: 0.5rem;
 `
+
+export const AdditionalOptionsButtonsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+`

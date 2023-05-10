@@ -6,8 +6,9 @@ import { BillingFormTypeInput } from '~/core/schemas/billingForm'
 
 export default function PaymentMethodChoose() {
   // prevent re-rendering using useWatch as we are using a form provider
-  const { steps } = useWatch<BillingFormTypeInput>()
-  const billingValue = steps?.billingData?.billing_value?.replaceAll(',', '.')
+  const billingValue = useWatch({
+    name: 'steps.billingData.billing_value',
+  })
 
   return (
     <>

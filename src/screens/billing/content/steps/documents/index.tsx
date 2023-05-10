@@ -1,18 +1,24 @@
 import * as S from './styles'
 import { Button, Select, Text, ToggleButton } from '~/components/atoms'
 import { FileUploader } from 'react-drag-drop-files'
-import { useState } from 'react'
 import { MdUpload } from 'react-icons/md'
 import { FaFile, FaTrash } from 'react-icons/fa'
-import { billingForm } from '~/store/billing/form'
 import { observer } from 'mobx-react'
 import { NextButtonContainer } from '../../styles'
 import { billingSteps } from '~/store/billing/steps'
+import { useFormContext, useWatch } from 'react-hook-form'
+import { BillingFormTypeInput } from '~/core/schemas/billingForm'
 
 const fileTypes = ['JPG', 'JPEG', 'PNG', 'PDF']
 
-const FileList = observer(() => {
-  if (billingForm.uploadedFiles.length == 0) {
+const FileList = ({
+  onRemove,
+  uploadedFiles,
+}: {
+  onRemove: (index: number) => void
+  uploadedFiles: File[]
+}) => {
+  if (!uploadedFiles || uploadedFiles.length == 0) {
     return <></>
   }
 
@@ -27,7 +33,7 @@ const FileList = observer(() => {
         </S.FileListTRHead>
       </S.FileListHead>
       <S.FileListBody>
-        {billingForm.uploadedFiles.map((file, index) => (
+        {uploadedFiles.map((file, index) => (
           <S.FileListTRBody key={index}>
             <S.FileListItemBody>
               <S.FileListItemBodyContent>
@@ -50,7 +56,7 @@ const FileList = observer(() => {
             <S.FileListItemBody>
               <FaTrash
                 onClick={() => {
-                  billingForm.removeFile(file)
+                  onRemove(index)
                 }}
                 size={14}
                 color="rgba(234, 84, 98, 1)"
@@ -61,15 +67,35 @@ const FileList = observer(() => {
       </S.FileListBody>
     </S.FileListContainer>
   )
-})
+}
 
 function Documents() {
+  const {
+    register,
+    trigger,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { errors, isValid },
+  } = useFormContext<BillingFormTypeInput>()
+
+  const uploadedFiles: File[] = useWatch({
+    name: 'steps.billingData.uploaded_files',
+  })
+
   const handleChange = (files: FileList) => {
     const newFiles = Array.from(files)
-    newFiles.map((file) => {
-      billingForm.addFile(file)
-    })
+    const currentFiles = uploadedFiles || []
+    const filteredFiles = newFiles.filter(
+      (file) =>
+        !currentFiles.some(
+          (currentFile) => currentFile.name === file.name || currentFile.size == file.size
+        )
+    )
+    setValue('steps.billingData.uploaded_files', [...currentFiles, ...filteredFiles])
   }
+
+  console.log()
 
   return (
     <S.Documents>
@@ -103,7 +129,15 @@ function Documents() {
             </>
           }
         />
-        <FileList />
+        <FileList
+          uploadedFiles={uploadedFiles}
+          onRemove={(index) => {
+            const newFiles = getValues('steps.billingData.uploaded_files')?.filter(
+              (file, i) => i !== index
+            )
+            setValue('steps.billingData.uploaded_files', newFiles)
+          }}
+        />
       </S.DocumentHead>
       <NextButtonContainer>
         <Button
