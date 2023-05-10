@@ -21,6 +21,10 @@ export default function Steps({ steps, action, currentStep }: ISteps) {
         .filter((step) => step.enabled)
         .map((step, index) => (
           <S.Step
+            filled={
+              index < currentStep ||
+              (index === currentStep && currentStep === steps.length - 1)
+            }
             active={index === currentStep}
             key={index}
             onClick={() => {

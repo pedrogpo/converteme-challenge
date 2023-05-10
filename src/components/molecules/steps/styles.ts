@@ -13,6 +13,7 @@ export const StepsContainer = styled.div`
 
 interface IStep {
   active?: boolean
+  filled?: boolean
 }
 
 export const StepProgressCount = styled.div`
@@ -72,6 +73,18 @@ export const Step = styled.div<IStep>`
         p {
           color: ${({ theme }) => theme.colors.gray_600};
         }
+      }
+    `}
+
+  ${({ filled }) =>
+    filled &&
+    css`
+      ${StepProgressCount} {
+        p {
+          color: ${({ theme }) => theme.colors.white};
+        }
+        border: none;
+        background-color: ${({ theme }) => theme.colors.primary_500};
       }
     `}
 
