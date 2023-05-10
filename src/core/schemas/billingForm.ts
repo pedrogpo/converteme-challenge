@@ -38,6 +38,9 @@ export const billingFormSchema = z.object({
         })
         .refine(
           (val) => {
+            if (isNaN(Date.parse(val))) {
+              return true
+            }
             const date = new Date(val)
             const today = new Date()
             return date > today
@@ -45,14 +48,13 @@ export const billingFormSchema = z.object({
           {
             message: 'A data de vencimento precisa ser válida',
           }
-        ),
+        )
+        .default('__/__/____'),
       billing_payment_way: z.string(),
       billing_installments: z.string().transform((val) => Number(val)),
       billing_frequency_charge: z.string().default('monthly'),
     }),
-    rateAndPenalty: z.object({
-      billing_name: z.string().nonempty('O nome do cliente não pode ser vazio'),
-    }),
+    rateAndPenalty: z.object({}),
   }),
 })
 

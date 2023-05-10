@@ -78,8 +78,7 @@ function Discount() {
 
 export default function RateAndPenalty() {
   const {
-    register,
-    getValues,
+    trigger,
     formState: { errors, isValid },
   } = useFormContext<BillingFormTypeInput>()
 
@@ -102,7 +101,11 @@ export default function RateAndPenalty() {
           hug={false}
           type="button"
           onClick={() => {
-            billingSteps.nextStep()
+            trigger('steps.billingData').then((isValid) => {
+              if (isValid) {
+                billingSteps.nextStep()
+              }
+            })
           }}
         >
           AVANÇAR

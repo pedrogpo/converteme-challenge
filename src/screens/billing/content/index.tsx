@@ -18,7 +18,7 @@ function BillingContent() {
   })
 
   const onSubmit = (data: BillingFormTypeInput) => {
-    console.log(data)
+    console.log({ data })
   }
 
   const steps = [

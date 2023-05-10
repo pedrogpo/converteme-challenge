@@ -67,9 +67,13 @@ export default function BillingData() {
       <NextButtonContainer>
         <Button
           hug={false}
-          type="button"
+          type="submit"
           onClick={() => {
-            billingSteps.nextStep()
+            trigger('steps.billingData').then((isValid) => {
+              if (isValid) {
+                billingSteps.nextStep()
+              }
+            })
           }}
         >
           AVANÇAR
