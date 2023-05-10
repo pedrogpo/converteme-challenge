@@ -97,8 +97,8 @@ export function PaymentWayChoose() {
               label="Vencimento da 1° cobrança"
               placeholder="__/__/____"
               mask="99/99/9999"
-              {...register('steps.billingData.billing_due_date')}
-              error={errors.steps?.billingData?.billing_due_date?.message}
+              {...register('steps.billingData.billing_first_due_date')}
+              error={errors.steps?.billingData?.billing_first_due_date?.message}
             />
 
             <Select
