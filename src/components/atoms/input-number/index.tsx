@@ -42,7 +42,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberAppProps>(
             <S.Input
               optional={optional}
               placeholder="0,00"
-              type="text"
+              type="number"
               {...props}
               autoComplete="none"
               ref={ref}
