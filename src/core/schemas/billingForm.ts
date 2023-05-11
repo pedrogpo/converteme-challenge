@@ -1,4 +1,5 @@
 import * as z from 'zod'
+import { ICustomer, customerSchema } from '~/interfaces/billing/customer'
 
 export const billingFormSchema = z.object({
   steps: z.object({
@@ -12,7 +13,7 @@ export const billingFormSchema = z.object({
         .refine((val) => val <= 999999, {
           message: 'O valor precisa ser no max. 999999.0',
         }),
-      billing_description: z.string(),
+      billing_description: z.string().optional(),
       billing_due_date: z
         .string()
         // check if it's really a date in format __/__/____
@@ -53,8 +54,11 @@ export const billingFormSchema = z.object({
           }
         )
         .default('__/__/____'),
-      billing_payment_way: z.string(),
-      billing_installments: z.string().transform((val) => Number(val)),
+      billing_payment_way: z.string().default('À vista ou parcelado'),
+      billing_installments: z
+        .string()
+        .transform((val) => Number(val))
+        .default('0'),
       billing_frequency_charge: z.string().default('monthly'),
       send_documents: z.boolean().default(false),
       issue_invoice: z.boolean().default(false),
@@ -85,20 +89,30 @@ export const billingFormSchema = z.object({
         .transform((val) => Number(val.replaceAll(',', '.')))
         .default('0'),
     }),
-    documents: z.object({
-      uploaded_files: z
-        .array(z.custom<File>())
-        .refine(
-          (files) => {
-            // Check if all items in the array are instances of the File object
-            return files.every((file) => file instanceof File)
-          },
-          {
-            // If the refinement fails, throw an error with this message
-            message: 'Expected a file',
-          }
-        )
-        .default([]),
+    documents: z
+      .object({
+        uploaded_files: z
+          .array(z.custom<File>())
+          .refine(
+            (files) => {
+              // Check if all items in the array are instances of the File object
+              return files.every((file) => file instanceof File)
+            },
+            {
+              // If the refinement fails, throw an error with this message
+              message: 'Expected a file',
+            }
+          )
+          .default([]),
+      })
+      .default({
+        uploaded_files: [],
+      }),
+    customerData: z.object({
+      billing_shipping_method: z.array(z.string()).default([]),
+      //selected_customer: customerSchema with custom message for required
+      selected_customer: customerSchema,
+      is_new_customer: z.boolean().default(false),
     }),
   }),
 })

@@ -1,5 +1,5 @@
 import * as S from './styles'
-import { Input, Select, Text } from '~/components/atoms'
+import { Input, InputMask, Select, Text } from '~/components/atoms'
 import { useEffect, useState } from 'react'
 import { FormMultiData } from '~/components/atoms/form-group'
 import { useFormContext } from 'react-hook-form'
@@ -68,7 +68,7 @@ export function PaymentWayChoose() {
               ))}
             </Select>
 
-            <Input
+            <InputMask
               {...register('steps.billingData.billing_due_date')}
               error={errors.steps?.billingData?.billing_due_date?.message}
               label="Vencimento da cobrança"
@@ -93,7 +93,7 @@ export function PaymentWayChoose() {
               <option value="yearly">Anual</option>
             </Select>
 
-            <Input
+            <InputMask
               label="Vencimento da 1° cobrança"
               placeholder="__/__/____"
               mask="99/99/9999"

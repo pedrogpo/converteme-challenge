@@ -7,7 +7,7 @@ interface InputProps {
   background: ColorThemeType
 }
 
-export const Input = styled(InputMask)<InputProps>`
+const baseProps = css<InputProps>`
   border-radius: 7px;
   width: 100%;
   outline: none;
@@ -41,6 +41,14 @@ export const Input = styled(InputMask)<InputProps>`
   height: 2.25rem;
 `
 
+export const Input = styled.input<InputProps>`
+  ${baseProps}
+`
+
+export const InputWithMask = styled(InputMask)<InputProps>`
+  ${baseProps}
+`
+
 interface InputBoxInterface {
   hasError: boolean
 }
@@ -52,7 +60,7 @@ export const InputBox = styled.div<InputBoxInterface>`
   ${({ hasError }) =>
     hasError &&
     css`
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem !important;
     `}
 `
 

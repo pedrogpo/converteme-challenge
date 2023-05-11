@@ -2,13 +2,14 @@ import * as S from './styles'
 import { Steps } from '~/components/molecules'
 import { BackArrow, Card, Text } from '~/components/atoms'
 import { billingSteps } from '~/store/billing/steps'
-import BillingData from './steps/billing-data'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { observer } from 'mobx-react'
 import { BillingFormTypeInput, billingFormSchema } from '~/core/schemas/billingForm'
+import BillingData from './steps/billing-data'
 import RateAndPenalty from './steps/rate-and-penalty'
 import Documents from './steps/documents'
+import CustomerData from './steps/customer-data'
 
 function BillingContent() {
   const methods = useForm<BillingFormTypeInput>({
@@ -39,7 +40,7 @@ function BillingContent() {
       enabled: sendDocuments!,
     },
     {
-      component: <div>Dados do cliente</div>,
+      component: <CustomerData />,
       label: 'Dados do cliente',
       enabled: true,
     },
@@ -66,11 +67,14 @@ function BillingContent() {
         />
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(onSubmit)}>
-            {steps.map(
-              (step, index) =>
-                billingSteps.getCurrentStep() === index &&
-                step.enabled && <div key={index}>{step.component}</div>
-            )}
+            {steps
+              .filter((step) => step.enabled)
+              .map(
+                (step, index) =>
+                  billingSteps.getCurrentStep() === index && (
+                    <div key={index}>{step.component}</div>
+                  )
+              )}
           </form>
         </FormProvider>
       </Card>

@@ -95,8 +95,6 @@ function Documents() {
     setValue('steps.documents.uploaded_files', [...currentFiles, ...filteredFiles])
   }
 
-  console.log()
-
   return (
     <S.Documents>
       <S.DocumentHead>

@@ -27,6 +27,6 @@ export default function Toast({
     pauseOnHover: true,
     draggable: false,
     progress: undefined,
-    theme: 'dark',
+    theme: 'light',
   })
 }
