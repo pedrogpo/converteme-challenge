@@ -9,15 +9,21 @@ export function PaymentWayChoose() {
   const {
     register,
     formState: { errors },
+    getValues,
     setValue,
   } = useFormContext<BillingFormTypeInput>()
 
-  const [selected, setSelected] = useState(0)
-
   const ways = ['À vista ou parcelado', 'Assinatura']
 
+  const [selected, setSelected] = useState(
+    getValues('steps.billingData.billing_payment_way') === 'Assinatura' ? 1 : 0
+  )
+
   useEffect(() => {
-    setValue('steps.billingData.billing_payment_way', ways[0])
+    setValue(
+      'steps.billingData.billing_payment_way',
+      getValues('steps.billingData.billing_payment_way') || ways[0]
+    )
   }, [])
 
   return (
@@ -74,6 +80,7 @@ export function PaymentWayChoose() {
               label="Vencimento da cobrança"
               placeholder="__/__/____"
               mask="99/99/9999"
+              defaultValue={''}
             />
           </>
         )}
@@ -84,8 +91,10 @@ export function PaymentWayChoose() {
               color="black"
               placeholder="Status"
               sizeOf="l"
-              error={errors.steps?.billingData?.billing_frequency_charge?.message}
-              {...register('steps.billingData.billing_frequency_charge')}
+              error={
+                errors.steps?.billingData?.billing_subscription_frequency_charge?.message
+              }
+              {...register('steps.billingData.billing_subscription_frequency_charge')}
               defaultValue="monthly"
             >
               <option value="monthly">Mensal</option>
@@ -97,8 +106,11 @@ export function PaymentWayChoose() {
               label="Vencimento da 1° cobrança"
               placeholder="__/__/____"
               mask="99/99/9999"
-              {...register('steps.billingData.billing_first_due_date')}
-              error={errors.steps?.billingData?.billing_first_due_date?.message}
+              {...register('steps.billingData.billing_subscription_first_due_date')}
+              error={
+                errors.steps?.billingData?.billing_subscription_first_due_date?.message
+              }
+              defaultValue={''}
             />
 
             <Select

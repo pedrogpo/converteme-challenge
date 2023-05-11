@@ -1,7 +1,7 @@
 import * as S from './styles'
-import { PaymentWayChoose } from './components/payment-way-choose'
+import { PaymentWayChoose } from './payment-way-choose'
 import { Button, InputNumber, Text, TextArea, ToggleButton } from '~/components/atoms'
-import PaymentMethodChoose from './components/payment-method-choose'
+import PaymentMethodChoose from './payment-method-choose'
 import { billingSteps } from '~/store/billing/steps'
 import { useFormContext } from 'react-hook-form'
 import { BillingFormTypeInput } from '~/core/schemas/billingForm'
@@ -86,7 +86,7 @@ export default function BillingData() {
       <NextButtonContainer>
         <Button
           hug={false}
-          type="submit"
+          type="button"
           onClick={() => {
             trigger('steps.billingData').then((isValid) => {
               if (isValid) {

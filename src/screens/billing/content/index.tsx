@@ -10,6 +10,7 @@ import BillingData from './steps/billing-data'
 import RateAndPenalty from './steps/rate-and-penalty'
 import Documents from './steps/documents'
 import CustomerData from './steps/customer-data'
+import Resume from './steps/resume'
 
 function BillingContent() {
   const methods = useForm<BillingFormTypeInput>({
@@ -45,7 +46,7 @@ function BillingContent() {
       enabled: true,
     },
     {
-      component: <div>Resumo</div>,
+      component: <Resume />,
       label: 'Resumo',
       enabled: true,
     },

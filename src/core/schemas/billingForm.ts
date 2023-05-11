@@ -1,68 +1,90 @@
 import * as z from 'zod'
 import { ICustomer, customerSchema } from '~/interfaces/billing/customer'
 
+var isDate = function (date: string | null) {
+  if (!date) return false
+  return !isNaN(new Date(date).getDate())
+}
+
 export const billingFormSchema = z.object({
   steps: z.object({
-    billingData: z.object({
-      billing_value: z
-        .string()
-        .transform((val) => Number(val.replaceAll(',', '.')))
-        .refine((val) => val >= 0.01, {
-          message: 'O valor precisa ser no min. 0.01',
-        })
-        .refine((val) => val <= 999999, {
-          message: 'O valor precisa ser no max. 999999.0',
-        }),
-      billing_description: z.string().optional(),
-      billing_due_date: z
-        .string()
-        // check if it's really a date in format __/__/____
-        .transform((val) => {
-          const parts = val.split('/')
-          const newDateString = `${parts[1]}/${parts[0]}/${parts[2]}`
-          return newDateString
-        })
-        .refine(
-          (val) => {
-            const date = new Date(val)
-            const today = new Date()
-            return date > today
-          },
-          {
-            message: 'A data de vencimento precisa ser válida',
-          }
-        ),
-      billing_first_due_date: z
-        .string()
-        // check if it's really a date in format __/__/____
-        .transform((val) => {
-          const parts = val.split('/')
-          const newDateString = `${parts[1]}/${parts[0]}/${parts[2]}`
-          return newDateString
-        })
-        .refine(
-          (val) => {
-            if (isNaN(Date.parse(val))) {
-              return true
-            }
-            const date = new Date(val)
-            const today = new Date()
-            return date > today
-          },
-          {
-            message: 'A data de vencimento precisa ser válida',
-          }
-        )
-        .default('__/__/____'),
-      billing_payment_way: z.string().default('À vista ou parcelado'),
-      billing_installments: z
-        .string()
-        .transform((val) => Number(val))
-        .default('0'),
-      billing_frequency_charge: z.string().default('monthly'),
-      send_documents: z.boolean().default(false),
-      issue_invoice: z.boolean().default(false),
-    }),
+    billingData: z
+      .object({
+        billing_value: z
+          .string()
+          .transform((val) => Number(val.replaceAll(',', '.')))
+          .refine((val) => val >= 0.01, {
+            message: 'O valor precisa ser no min. 0.01',
+          })
+          .refine((val) => val <= 999999, {
+            message: 'O valor precisa ser no max. 999999.0',
+          }),
+        billing_description: z.string().optional(),
+        billing_due_date: z
+          .string()
+          .transform((val) => {
+            const parts = val.split('/')
+            const newDateString = `${parts[1]}/${parts[0]}/${parts[2]}`
+            return newDateString
+          })
+          // .refine(
+          //   (val) => {
+          //     if (isDate(val)) {
+          //       const date = new Date(val)
+          //       const today = new Date()
+          //       return date > today
+          //     }
+          //   },
+          //   {
+          //     message: 'A data de vencimento precisa ser válida',
+          //   }
+          // )
+          .nullable()
+          .default(null),
+        billing_subscription_first_due_date: z
+          .string()
+          .transform((val) => {
+            const parts = val.split('/')
+            const newDateString = `${parts[1]}/${parts[0]}/${parts[2]}`
+            return newDateString
+          })
+          // .refine(
+          //   (val) => {
+          //     if (isDate(val)) {
+          //       const date = new Date(val)
+          //       const today = new Date()
+          //       return date > today
+          //     }
+          //   },
+          //   {
+          //     message: 'A data de vencimento precisa ser válida',
+          //   }
+          // )
+          .nullable()
+          .default(null),
+        billing_payment_way: z.string().default('À vista ou parcelado'),
+        billing_installments: z
+          .string()
+          .transform((val) => Number(val))
+          .default('0'),
+        billing_subscription_frequency_charge: z.string().default('monthly'),
+        send_documents: z.boolean().default(false),
+        issue_invoice: z.boolean().default(false),
+      })
+      .superRefine(({ billing_subscription_first_due_date, billing_due_date }, ctx) => {
+        if (!isDate(billing_subscription_first_due_date) && !isDate(billing_due_date)) {
+          ctx.addIssue({
+            code: 'custom',
+            path: ['billing_due_date'],
+            message: 'É necessário definir uma data de vencimento',
+          })
+          ctx.addIssue({
+            code: 'custom',
+            path: ['billing_subscription_first_due_date'],
+            message: 'É necessário definir uma data de vencimento',
+          })
+        }
+      }),
     rateAndPenalty: z.object({
       interestPerMonth: z
         .string()

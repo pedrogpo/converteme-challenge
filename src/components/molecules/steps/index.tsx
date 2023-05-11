@@ -28,7 +28,12 @@ export default function Steps({ steps, action, currentStep }: ISteps) {
             active={index === currentStep}
             key={index}
             onClick={() => {
-              action(index)
+              // only call if it's filled
+              if (
+                index < currentStep ||
+                (index === currentStep && currentStep === steps.length - 1)
+              )
+                action(index)
             }}
           >
             <S.StepProgress>
