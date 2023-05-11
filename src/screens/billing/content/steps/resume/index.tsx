@@ -43,7 +43,7 @@ export default function Resume() {
           VOLTAR
         </Button>
         <Button hug={false} type="submit">
-          Finalizar
+          FINALIZAR
         </Button>
       </NextButtonContainer>
     </S.Resume>

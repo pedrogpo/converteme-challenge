@@ -76,12 +76,12 @@ export const billingFormSchema = z.object({
           ctx.addIssue({
             code: 'custom',
             path: ['billing_due_date'],
-            message: 'É necessário definir uma data de vencimento',
+            message: 'É necessário definir uma data de vencimento válida',
           })
           ctx.addIssue({
             code: 'custom',
             path: ['billing_subscription_first_due_date'],
-            message: 'É necessário definir uma data de vencimento',
+            message: 'É necessário definir uma data de vencimento válida',
           })
         }
       }),
